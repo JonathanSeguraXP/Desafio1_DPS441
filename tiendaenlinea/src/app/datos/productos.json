@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop Gamer ASUS TUF",
+    "precio": 899.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/laptop-asus.jpg",
+    "descripcion": "RTX 3050, 16GB RAM, 512GB SSD"
+  },
+  {
+    "id": 2,
+    "nombre": "Mouse Logitech G203",
+    "precio": 35.50,
+    "categoria": "hardware",
+    "imagen": "/imagenes/mouse-logitech.jpg",
+    "descripcion": "RGB, 8000 DPI, 6 botones"
+  },
+  {
+    "id": 3,
+    "nombre": "Teclado Mecánico Redragon",
+    "precio": 45.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/teclado-redragon.jpg",
+    "descripcion": "Switch rojo, RGB, anti-ghosting"
+  },
+  {
+    "id": 4,
+    "nombre": "Monitor Samsung 24''",
+    "precio": 159.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/monitor-samsung.jpg",
+    "descripcion": "Full HD, 75Hz, IPS"
+  },
+  {
+    "id": 5,
+    "nombre": "Audífonos HyperX Cloud II",
+    "precio": 79.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/audifonos-hyperx.jpg",
+    "descripcion": "7.1 surround, micrófono removible"
+  },
+  {
+    "id": 6,
+    "nombre": "Disco SSD Samsung 1TB",
+    "precio": 89.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/ssd-samsung.jpg",
+    "descripcion": "NVMe M.2, 3500MB/s"
+  },
+  {
+    "id": 7,
+    "nombre": "Memoria RAM Kingston 16GB",
+    "precio": 65.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/ram-kingston.jpg",
+    "descripcion": "DDR4, 3200MHz"
+  },
+  {
+    "id": 8,
+    "nombre": "Tarjeta Gráfica RTX 3060",
+    "precio": 329.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/rtx3060.jpg",
+    "descripcion": "12GB GDDR6, DLSS"
+  },
+  {
+    "id": 9,
+    "nombre": "Procesador Intel i5-12400",
+    "precio": 199.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/intel-i5.jpg",
+    "descripcion": "6 núcleos, 12 hilos"
+  },
+  {
+    "id": 10,
+    "nombre": "Fuente de poder 650W",
+    "precio": 79.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/fuente-650w.jpg",
+    "descripcion": "80 Plus Bronze, modular"
+  },
+  {
+    "id": 11,
+    "nombre": "Gabinete NZXT H510",
+    "precio": 89.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/gabinete-nzxt.jpg",
+    "descripcion": "Vidrio templado, blanco"
+  },
+  {
+    "id": 12,
+    "nombre": "Silla Gamer Corsair",
+    "precio": 249.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/silla-gamer.jpg",
+    "descripcion": "Reclinable, soporte lumbar"
+  },
+  {
+    "id": 13,
+    "nombre": "Windows 11 Pro",
+    "precio": 35.99,
+    "categoria": "software",
+    "imagen": "/imagenes/windows11.jpg",
+    "descripcion": "Licencia digital original"
+  },
+  {
+    "id": 14,
+    "nombre": "Microsoft Office 2021",
+    "precio": 45.99,
+    "categoria": "software",
+    "imagen": "/imagenes/office2021.jpg",
+    "descripcion": "Word, Excel, PowerPoint"
+  },
+  {
+    "id": 15,
+    "nombre": "Adobe Photoshop",
+    "precio": 22.99,
+    "categoria": "software",
+    "imagen": "/imagenes/photoshop.jpg",
+    "descripcion": "Suscripción mensual"
+  },
+  {
+    "id": 16,
+    "nombre": "Antivirus McAfee",
+    "precio": 29.99,
+    "categoria": "software",
+    "imagen": "/imagenes/mcafee.jpg",
+    "descripcion": "1 año, 3 dispositivos"
+  },
+  {
+    "id": 17,
+    "nombre": "MacBook Air M1",
+    "precio": 999.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/macbook-air.jpg",
+    "descripcion": "8GB RAM, 256GB SSD"
+  },
+  {
+    "id": 18,
+    "nombre": "iPad 10.2''",
+    "precio": 329.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/ipad.jpg",
+    "descripcion": "64GB, WiFi"
+  },
+  {
+    "id": 19,
+    "nombre": "AirPods Pro",
+    "precio": 199.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/airpods-pro.jpg",
+    "descripcion": "Cancelación de ruido"
+  },
+  {
+    "id": 20,
+    "nombre": "Apple Watch SE",
+    "precio": 249.99,
+    "categoria": "hardware",
+    "imagen": "/imagenes/apple-watch.jpg",
+    "descripcion": "GPS, 40mm"
+  },
+  {
+    "id": 21,
+    "nombre": "Final Cut Pro",
+    "precio": 299.99,
+    "categoria": "software",
+    "imagen": "/imagenes/finalcut.jpg",
+    "descripcion": "Licencia permanente"
+  }
+]
