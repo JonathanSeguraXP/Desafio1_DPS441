@@ -32,7 +32,7 @@ export default function Login() {
       <div className={styles.card}>
         <div className={styles.icono}>🛒</div>
         <h2 className={styles.title}>
-          Tech<span>Store</span>
+          Tecno<span>Store</span>
         </h2>
         
         {error && <p className={styles.error}>{error}</p>}
