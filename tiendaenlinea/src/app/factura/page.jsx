@@ -1,13 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useCarrito } from "../context/CarritoContext";
 import Image from "next/image";
+import html2pdf from "html2pdf.js";
 
 export default function Factura() {
   const router = useRouter();
   const { usuario, carrito, totalPrecio, vaciarCarrito } = useCarrito();
   const [facturaGenerada, setFacturaGenerada] = useState(false);
+  const [cargando, setCargando] = useState(false);
+  const facturaRef = useRef(null);
 
   useEffect(() => {
     if (!usuario) {
@@ -16,103 +19,171 @@ export default function Factura() {
   }, [usuario, router]);
 
   if (!usuario) {
-    return <p style={styles.cargando}>Redirigiendo al login...</p>;
+    return <p style={styles.cargando}>Cargando...</p>;
   }
-
-  const handleFinalizar = () => {
-    vaciarCarrito();
-    router.push("/productos");
-  };
 
   if (!facturaGenerada && carrito.length > 0) {
     setFacturaGenerada(true);
   }
 
-  const fecha = new Date().toLocaleDateString("es-ES", {
+  const fecha = new Date().toLocaleDateString("es-SV", {
     year: "numeric",
     month: "long",
-    day: "numeric"
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
   });
 
   const numeroFactura = "FAC-" + Date.now().toString().slice(-8);
+  const iva = totalPrecio * 0.13;
+  const totalConIva = totalPrecio + iva;
+
+  const descargarPDF = () => {
+    setCargando(true);
+    
+    // Opciones para el PDF
+    const opciones = {
+      margin:        [0.5, 0.5, 0.5, 0.5],
+      filename:     `factura-${numeroFactura}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, letterRendering: true },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Generar y descargar el PDF
+    html2pdf().set(opciones).from(facturaRef.current).save();
+    
+    setTimeout(() => {
+      setCargando(false);
+    }, 1000);
+  };
+
+  const finalizarCompra = () => {
+    vaciarCarrito();
+    router.push("/productos");
+  };
 
   if (carrito.length === 0 && !facturaGenerada) {
     return (
       <div style={styles.container}>
-        <h2>No hay productos para facturar</h2>
-        <button onClick={() => router.push("/productos")} style={styles.btn}>
-          Ir a Productos
-        </button>
+        <div style={styles.vacio}>
+          <h2>No hay productos para facturar</h2>
+          <button onClick={() => router.push("/productos")} style={styles.btn}>
+            Ver productos
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div style={styles.container}>
-      <div style={styles.factura}>
+      {/* Factura (lo que se va a convertir en PDF) */}
+      <div ref={facturaRef} style={styles.factura}>
+        {/* Encabezado */}
         <div style={styles.header}>
-          <h1 style={styles.titulo}>TECHSTORE</h1>
+          <h1 style={styles.titulo}>🛒 TECHSTORE EL SALVADOR</h1>
           <p style={styles.subtitulo}>Factura de Compra</p>
+          <p style={styles.nit}>NIT: 0614-290598-123-4</p>
+          <p style={styles.regimen}>Responsable: Régimen General</p>
         </div>
         
-        <div style={styles.info}>
+        {/* Información de factura */}
+        <div style={styles.infoGrid}>
           <div style={styles.infoLeft}>
             <p><strong>Factura N°:</strong> {numeroFactura}</p>
             <p><strong>Fecha:</strong> {fecha}</p>
+            <p><strong>Vendedor:</strong> Juan Pérez</p>
+            <p><strong>Documento:</strong> 12345678-9</p>
           </div>
           <div style={styles.infoRight}>
             <p><strong>Cliente:</strong> {usuario.nombre}</p>
             <p><strong>Email:</strong> {usuario.email}</p>
+            <p><strong>Teléfono:</strong> 7654-3210</p>
+            <p><strong>Dirección:</strong> San Salvador</p>
           </div>
         </div>
         
+        {/* Tabla de productos */}
         <table style={styles.tabla}>
           <thead>
             <tr>
-              <th>Producto</th>
-              <th>Cant.</th>
-              <th>Precio</th>
-              <th>Subtotal</th>
+              <th style={styles.th}>Producto</th>
+              <th style={styles.th}>Cant.</th>
+              <th style={styles.th}>P.Unit</th>
+              <th style={styles.th}>Total</th>
             </tr>
           </thead>
           <tbody>
             {carrito.map(item => (
               <tr key={item.id}>
-                <td style={styles.productoCell}>
+                <td style={styles.td}>
                   <div style={styles.productoInfo}>
                     <Image 
                       src={item.imagen}
                       alt={item.nombre}
-                      width={40}
-                      height={40}
+                      width={25}
+                      height={25}
                       style={styles.imagenFactura}
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/40";
+                        e.target.src = "https://via.placeholder.com/25";
                       }}
                     />
-                    <span>{item.nombre}</span>
+                    <span style={styles.nombreProducto}>{item.nombre}</span>
                   </div>
                 </td>
-                <td style={styles.center}>{item.cantidad}</td>
-                <td style={styles.right}>${item.precio.toFixed(2)}</td>
-                <td style={styles.right}>${(item.precio * item.cantidad).toFixed(2)}</td>
+                <td style={styles.tdCenter}>{item.cantidad}</td>
+                <td style={styles.tdRight}>${item.precio.toFixed(2)}</td>
+                <td style={styles.tdRight}>${(item.precio * item.cantidad).toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan="3" style={styles.totalLabel}>TOTAL:</td>
-              <td style={styles.totalValor}>${totalPrecio.toFixed(2)}</td>
-            </tr>
-          </tfoot>
         </table>
         
+        {/* Totales */}
+        <div style={styles.totales}>
+          <div style={styles.lineaTotal}>
+            <span>Subtotal:</span>
+            <span>${totalPrecio.toFixed(2)}</span>
+          </div>
+          <div style={styles.lineaTotal}>
+            <span>IVA (13%):</span>
+            <span>${iva.toFixed(2)}</span>
+          </div>
+          <div style={styles.lineaTotal}>
+            <span>Descuento:</span>
+            <span>$0.00</span>
+          </div>
+          <div style={styles.lineaTotalFinal}>
+            <span>TOTAL A PAGAR:</span>
+            <span>${totalConIva.toFixed(2)}</span>
+          </div>
+        </div>
+        
+        {/* Mensaje de gracias */}
         <div style={styles.footer}>
           <p>¡Gracias por tu compra!</p>
-          <button onClick={handleFinalizar} style={styles.btnFinalizar}>
-            Finalizar
-          </button>
+          <p style={styles.footerSmall}>Artículos tecnológicos de calidad en El Salvador</p>
+          <p style={styles.footerSmall}>Tel: 2288-5678 | San Salvador</p>
+          <p style={styles.footerSmall}>www.techstore.com.sv</p>
         </div>
+      </div>
+      
+      {/* Botones de acción */}
+      <div style={styles.acciones}>
+        <button 
+          onClick={descargarPDF} 
+          style={styles.btnPDF}
+          disabled={cargando}
+        >
+          {cargando ? "Generando PDF..." : "📥 Descargar PDF"}
+        </button>
+        <button 
+          onClick={finalizarCompra} 
+          style={styles.btnVolver}
+        >
+          ← Finalizar compra
+        </button>
       </div>
     </div>
   );
@@ -128,30 +199,43 @@ const styles = {
     background: "white",
     padding: "30px",
     borderRadius: "8px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+    marginBottom: "20px",
+    fontFamily: "Arial, sans-serif"
   },
   header: {
     textAlign: "center",
     marginBottom: "30px",
     paddingBottom: "20px",
-    borderBottom: "2px solid #2c3e50"
+    borderBottom: "2px solid #d32f2f"
   },
   titulo: {
     margin: 0,
-    color: "#2c3e50",
-    fontSize: "2rem"
+    color: "#d32f2f",
+    fontSize: "24px"
   },
   subtitulo: {
-    margin: "5px 0 0",
-    color: "#666"
+    margin: "5px 0",
+    color: "#666",
+    fontSize: "18px"
   },
-  info: {
+  nit: {
+    margin: "5px 0",
+    color: "#888",
+    fontSize: "14px"
+  },
+  regimen: {
+    margin: "5px 0",
+    color: "#888",
+    fontSize: "12px"
+  },
+  infoGrid: {
     display: "flex",
     justifyContent: "space-between",
     marginBottom: "30px",
     padding: "15px",
     background: "#f5f5f5",
-    borderRadius: "4px"
+    borderRadius: "5px"
   },
   infoLeft: {
     textAlign: "left"
@@ -164,8 +248,26 @@ const styles = {
     borderCollapse: "collapse",
     marginBottom: "30px"
   },
-  productoCell: {
-    padding: "10px"
+  th: {
+    textAlign: "left",
+    padding: "12px",
+    background: "#d32f2f",
+    color: "white",
+    fontSize: "14px"
+  },
+  td: {
+    padding: "10px",
+    borderBottom: "1px solid #ddd"
+  },
+  tdCenter: {
+    padding: "10px",
+    textAlign: "center",
+    borderBottom: "1px solid #ddd"
+  },
+  tdRight: {
+    padding: "10px",
+    textAlign: "right",
+    borderBottom: "1px solid #ddd"
   },
   productoInfo: {
     display: "flex",
@@ -173,48 +275,76 @@ const styles = {
     gap: "10px"
   },
   imagenFactura: {
-    width: "40px",
-    height: "40px",
+    width: "25px",
+    height: "25px",
     objectFit: "contain"
   },
-  center: {
-    textAlign: "center",
-    padding: "10px"
+  nombreProducto: {
+    fontSize: "14px"
   },
-  right: {
-    textAlign: "right",
-    padding: "10px"
+  totales: {
+    width: "300px",
+    marginLeft: "auto",
+    padding: "15px",
+    background: "#f9f9f9",
+    borderRadius: "5px"
   },
-  totalLabel: {
-    textAlign: "right",
-    padding: "15px 10px",
+  lineaTotal: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "5px 0",
+    fontSize: "14px"
+  },
+  lineaTotalFinal: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "10px 0",
+    marginTop: "5px",
+    borderTop: "2px solid #d32f2f",
+    fontSize: "18px",
     fontWeight: "bold",
-    fontSize: "1.2rem",
-    borderTop: "2px solid #2c3e50"
-  },
-  totalValor: {
-    textAlign: "right",
-    padding: "15px 10px",
-    fontWeight: "bold",
-    fontSize: "1.2rem",
-    borderTop: "2px solid #2c3e50",
-    color: "#27ae60"
+    color: "#d32f2f"
   },
   footer: {
     textAlign: "center",
     marginTop: "30px",
     paddingTop: "20px",
-    borderTop: "1px solid #ddd"
+    borderTop: "1px solid #ddd",
+    color: "#666"
   },
-  btnFinalizar: {
+  footerSmall: {
+    fontSize: "12px",
+    margin: "2px 0"
+  },
+  acciones: {
+    display: "flex",
+    gap: "15px",
+    justifyContent: "center"
+  },
+  btnPDF: {
+    padding: "12px 30px",
+    background: "#d32f2f",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    disabled: {
+      opacity: 0.5,
+      cursor: "not-allowed"
+    }
+  },
+  btnVolver: {
     padding: "12px 30px",
     background: "#2c3e50",
     color: "white",
     border: "none",
-    borderRadius: "4px",
+    borderRadius: "5px",
     cursor: "pointer",
-    fontSize: "1rem",
-    marginTop: "15px"
+    fontSize: "16px"
   },
   btn: {
     padding: "10px 20px",
@@ -225,9 +355,17 @@ const styles = {
     cursor: "pointer",
     marginTop: "20px"
   },
+  vacio: {
+    textAlign: "center",
+    padding: "50px",
+    background: "white",
+    borderRadius: "8px",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+  },
   cargando: {
     textAlign: "center",
     marginTop: "50px",
+    fontSize: "18px",
     color: "#666"
   }
 };
