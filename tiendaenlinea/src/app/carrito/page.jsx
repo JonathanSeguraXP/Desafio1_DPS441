@@ -1,13 +1,16 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCarrito } from "../context/CarritoContext";
 import ItemCarrito from "../components/itemcarrito";
 import ModalConfirmacion from "../components/ModalConfirmacion";
+import styles from "./Carrito.module.css";
 
 export default function Carrito() {
   const router = useRouter();
   const { usuario, carrito, totalProductos, totalPrecio, vaciarCarrito } = useCarrito();
+  const [modalVaciar, setModalVaciar] = useState(false);
+  const [comprando, setComprando] = useState(false);
 
   useEffect(() => {
     if (!usuario) {
@@ -16,28 +19,27 @@ export default function Carrito() {
   }, [usuario, router]);
 
   if (!usuario) {
-    return <p style={styles.cargando}>Redirigiendo al login...</p>;
+    return <p className={styles.cargando}>Redirigiendo al login...</p>;
   }
 
   const handleVaciar = () => {
-    if (window.confirm("¿Estás seguro de vaciar todo el carrito?")) {
-      vaciarCarrito();
-    }
+    setModalVaciar(true);
   };
 
   const handleComprar = () => {
+    setComprando(true);
     router.push("/factura");
   };
 
   if (carrito.length === 0) {
     return (
-      <div style={styles.container}>
+      <div className={styles.container}>
         <h2>Tu Carrito</h2>
-        <div style={styles.vacio}>
+        <div className={styles.vacio}>
           <p>No hay productos en el carrito</p>
           <button 
             onClick={() => router.push("/productos")}
-            style={styles.btnIr}
+            className={styles.btnIr}
           >
             Ir a Productos
           </button>
@@ -47,110 +49,48 @@ export default function Carrito() {
   }
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.titulo}>Tu Carrito ({totalProductos} productos)</h2>
+    <div className={styles.container}>
+      <h2 className={styles.titulo}>Tu Carrito ({totalProductos} productos)</h2>
       
-      <div style={styles.itemsContainer}>
+      <div className={styles.itemsContainer}>
         {carrito.map(item => (
           <ItemCarrito key={item.id} item={item} />
         ))}
       </div>
       
-      <div style={styles.resumen}>
-        <div style={styles.total}>
+      <div className={styles.resumen}>
+        <div className={styles.total}>
           <h3>Total a pagar:</h3>
-          <h2 style={styles.totalPrecio}>${totalPrecio.toFixed(2)}</h2>
+          <h2 className={styles.totalPrecio}>${totalPrecio.toFixed(2)}</h2>
         </div>
         
-        <div style={styles.acciones}>
+        <div className={styles.acciones}>
           <button 
             onClick={handleVaciar}
-            style={styles.btnVaciar}
+            className={styles.btnVaciar}
           >
             Vaciar Carrito
           </button>
           <button 
             onClick={handleComprar}
-            style={styles.btnComprar}
+            className={styles.btnComprar}
+            disabled={comprando}
           >
-            Proceder al Pago
+            {comprando ? "Procesando..." : "Proceder al Pago"}
           </button>
         </div>
       </div>
+
+      <ModalConfirmacion 
+        visible={modalVaciar}
+        cerrarModal={() => setModalVaciar(false)}
+        confirmar={() => {
+          vaciarCarrito();
+          setModalVaciar(false);
+        }}
+        titulo="Vaciar carrito"
+        mensaje="¿Seguro que quieres eliminar todos los productos?"
+      />
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "1000px",
-    margin: "0 auto",
-    padding: "20px"
-  },
-  titulo: {
-    marginBottom: "30px",
-    color: "#333"
-  },
-  itemsContainer: {
-    marginBottom: "30px"
-  },
-  resumen: {
-    background: "#f9f9f9",
-    padding: "20px",
-    borderRadius: "8px",
-    border: "1px solid #ddd"
-  },
-  total: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px"
-  },
-  totalPrecio: {
-    color: "#2c3e50",
-    fontSize: "1.8rem"
-  },
-  acciones: {
-    display: "flex",
-    gap: "15px",
-    justifyContent: "flex-end"
-  },
-  btnVaciar: {
-    padding: "12px 25px",
-    background: "#e74c3c",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem"
-  },
-  btnComprar: {
-    padding: "12px 25px",
-    background: "#27ae60",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem"
-  },
-  vacio: {
-    textAlign: "center",
-    padding: "50px",
-    background: "#f9f9f9",
-    borderRadius: "8px"
-  },
-  btnIr: {
-    padding: "10px 20px",
-    background: "#2c3e50",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    marginTop: "20px"
-  },
-  cargando: {
-    textAlign: "center",
-    marginTop: "50px",
-    color: "#666"
-  }
-};

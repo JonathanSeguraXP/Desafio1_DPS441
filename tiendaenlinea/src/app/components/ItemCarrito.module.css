@@ -1,0 +1,163 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.imageContainer {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.info {
+  flex: 1;
+}
+
+.nombre {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.precio {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btnCantidad {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.btnCantidad:hover {
+  background: #e0e0e0;
+}
+
+.cantidad {
+  min-width: 30px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.btnEliminar {
+  padding: 5px 12px;
+  border: none;
+  background: #ffebee;
+  color: #d32f2f;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 15px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.btnEliminar:hover {
+  background: #ffcdd2;
+}
+
+.subtotal {
+  text-align: right;
+  min-width: 100px;
+}
+
+.subtotalLabel {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  color: #888;
+}
+
+.subtotalValor {
+  margin: 0;
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.1rem;
+}
+
+/* Agregar al final del archivo */
+
+.statsContainer {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.statLabel {
+  color: #666;
+  font-weight: 500;
+}
+
+.statValue {
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: white;
+}
+
+.disponible {
+  color: #27ae60;
+  background: #e8f5e8;
+}
+
+.agotado {
+  color: #e74c3c;
+  background: #ffebee;
+}
+
+.btnDeshabilitado {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btnDeshabilitado:hover {
+  background: #f5f5f5 !important;
+  transform: none !important;
+}

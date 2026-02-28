@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCarrito } from "../context/CarritoContext";
 import usuarios from "../datos/usuarios.json";
+import styles from "./Login.module.css";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -27,103 +28,53 @@ export default function Login() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Iniciar Sesión</h2>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <div className={styles.header}>
+          <div className={styles.icono}>🛒</div>
+          <h1 className={styles.title}>
+            Tech<span>Store</span>
+          </h1>
+        </div>
         
-        {error && <p style={styles.error}>{error}</p>}
+        {error && <div className={styles.error}>{error}</div>}
         
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.inputGroup}>
-            <label>Usuario:</label>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label>USUARIO</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={styles.input}
+              className={styles.input}
+              placeholder="Ingresa tu usuario"
               required
             />
           </div>
           
-          <div style={styles.inputGroup}>
-            <label>Contraseña:</label>
+          <div className={styles.inputGroup}>
+            <label>CONTRASEÑA</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={styles.input}
+              className={styles.input}
+              placeholder="Ingresa tu contraseña"
               required
             />
           </div>
           
-          <button type="submit" style={styles.button}>
-            Ingresar
+          <button type="submit" className={styles.button}>
+            INICIAR SESIÓN
           </button>
         </form>
         
-        <p style={styles.demo}>
-          Usuario: admin / Contraseña: 123456
-        </p>
+        <div className={styles.demo}>
+          <div className={styles.demoTitle}>📝 Demo:</div>
+          <p><strong>admin</strong> / 123456</p>
+          <p><strong>estudiante</strong> / dps441</p>
+        </div>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "70vh"
-  },
-  card: {
-    background: "white",
-    padding: "40px",
-    borderRadius: "8px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-    width: "100%",
-    maxWidth: "400px"
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "30px",
-    color: "#333"
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px"
-  },
-  inputGroup: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px"
-  },
-  input: {
-    padding: "10px",
-    borderRadius: "4px",
-    border: "1px solid #ddd",
-    fontSize: "16px"
-  },
-  button: {
-    background: "#2c3e50",
-    color: "white",
-    padding: "12px",
-    border: "none",
-    borderRadius: "4px",
-    fontSize: "16px",
-    cursor: "pointer",
-    marginTop: "10px"
-  },
-  error: {
-    color: "red",
-    textAlign: "center",
-    marginBottom: "15px"
-  },
-  demo: {
-    textAlign: "center",
-    marginTop: "20px",
-    color: "#666",
-    fontSize: "14px"
-  }
-};

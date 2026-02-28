@@ -1,87 +1,145 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
 import { useCarrito } from "../context/CarritoContext";
+import styles from "./tarjetaProducto.module.css";
 
 export default function TarjetaProducto({ producto }) {
-  const { agregarAlCarrito } = useCarrito();
+  const { agregarAlCarrito, productos } = useCarrito();
+  const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
+  const [mostrarSelector, setMostrarSelector] = useState(false);
+
+  // Obtener el stock ACTUALIZADO en tiempo real
+  const productoActualizado = productos.find(p => p.id === producto.id) || producto;
+  const stockActual = productoActualizado.stock;
+
+  const handleAgregar = () => {
+    if (stockActual === 0) {
+      alert(`❌ ${producto.nombre} está agotado`);
+      return;
+    }
+    
+    const exito = agregarAlCarrito(producto, cantidadSeleccionada);
+    
+    if (exito) {
+      alert(`✅ ${cantidadSeleccionada} ${producto.nombre}(s) agregado(s) al carrito`);
+      setMostrarSelector(false);
+      setCantidadSeleccionada(1);
+    }
+  };
+
+  // Determinar clase de stock
+  const getStockClass = () => {
+    if (stockActual === 0) return styles.stockAgotado;
+    if (stockActual <= 3) return styles.stockCritico;
+    if (stockActual <= 10) return styles.stockBajo;
+    return styles.stockNormal;
+  };
+
+  // Texto de stock
+  const getStockText = () => {
+    if (stockActual === 0) return "🚫 Agotado";
+    if (stockActual <= 3) return `⚠️ ¡Últimas ${stockActual} unidades!`;
+    if (stockActual <= 10) return `📦 Stock: ${stockActual}`;
+    return `✅ Stock: ${stockActual}`;
+  };
 
   return (
-    <div style={styles.card}>
-      <div style={styles.imageContainer}>
+    <div className={`${styles.card} ${stockActual === 0 ? styles.cardAgotado : ''}`}>
+      {/* Etiqueta de oferta si hay poco stock */}
+      {stockActual > 0 && stockActual <= 3 && (
+        <div className={styles.etiquetaOferta}>
+          ¡Últimas {stockActual}!
+        </div>
+      )}
+      
+      <div className={styles.imageContainer}>
         <Image
           src={producto.imagen}
           alt={producto.nombre}
           width={200}
           height={200}
-          style={styles.image}
+          className={styles.image}
           onError={(e) => {
             e.target.src = "https://via.placeholder.com/200";
           }}
         />
       </div>
       
-      <div style={styles.content}>
-        <h3 style={styles.nombre}>{producto.nombre}</h3>
-        <p style={styles.descripcion}>{producto.descripcion}</p>
-        <p style={styles.precio}>${producto.precio.toFixed(2)}</p>
-        <button 
-          onClick={() => agregarAlCarrito(producto)}
-          style={styles.boton}
-        >
-          Agregar al Carrito
-        </button>
+      <div className={styles.content}>
+        <h3 className={styles.nombre}>{producto.nombre}</h3>
+        <p className={styles.descripcion}>{producto.descripcion}</p>
+        
+        {/* Indicador de stock en tiempo real */}
+        <div className={styles.stockContainer}>
+          <span className={`${styles.stockBadge} ${getStockClass()}`}>
+            {getStockText()}
+          </span>
+        </div>
+        
+        <p className={styles.precio}>${producto.precio.toFixed(2)}</p>
+        
+        {stockActual > 0 ? (
+          <>
+            {!mostrarSelector ? (
+              <button 
+                onClick={() => setMostrarSelector(true)}
+                className={styles.boton}
+              >
+                🛒 Agregar al carrito
+              </button>
+            ) : (
+              <div className={styles.selectorContainer}>
+                <p className={styles.selectorTitulo}>¿Cuántos deseas?</p>
+                <div className={styles.selectorCantidad}>
+                  <button 
+                    onClick={() => setCantidadSeleccionada(Math.max(1, cantidadSeleccionada - 1))}
+                    className={styles.selectorBtn}
+                    disabled={cantidadSeleccionada <= 1}
+                  >
+                    -
+                  </button>
+                  <span className={styles.selectorValor}>{cantidadSeleccionada}</span>
+                  <button 
+                    onClick={() => setCantidadSeleccionada(Math.min(stockActual, cantidadSeleccionada + 1))}
+                    className={styles.selectorBtn}
+                    disabled={cantidadSeleccionada >= stockActual}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className={styles.selectorAcciones}>
+                  <button 
+                    onClick={handleAgregar}
+                    className={styles.selectorConfirmar}
+                  >
+                    Confirmar
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setMostrarSelector(false);
+                      setCantidadSeleccionada(1);
+                    }}
+                    className={styles.selectorCancelar}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+                <p className={styles.selectorStock}>
+                  Disponible: {stockActual} unidades
+                </p>
+              </div>
+            )}
+          </>
+        ) : (
+          <button 
+            className={`${styles.boton} ${styles.botonAgotado}`}
+            disabled
+          >
+            🚫 Agotado
+          </button>
+        )}
       </div>
     </div>
   );
 }
-
-const styles = {
-  card: {
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    overflow: "hidden",
-    background: "white",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-  },
-  imageContainer: {
-    height: "200px",
-    background: "#f5f5f5",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  image: {
-    objectFit: "contain",
-    width: "100%",
-    height: "100%"
-  },
-  content: {
-    padding: "15px"
-  },
-  nombre: {
-    margin: "0 0 10px 0",
-    fontSize: "1.1rem",
-    color: "#333"
-  },
-  descripcion: {
-    fontSize: "0.9rem",
-    color: "#666",
-    marginBottom: "10px"
-  },
-  precio: {
-    fontSize: "1.2rem",
-    fontWeight: "bold",
-    color: "#2c3e50",
-    marginBottom: "15px"
-  },
-  boton: {
-    width: "100%",
-    padding: "10px",
-    background: "#27ae60",
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1rem"
-  }
-};

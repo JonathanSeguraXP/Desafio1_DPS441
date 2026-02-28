@@ -1,0 +1,244 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.factura {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #d32f2f;
+}
+
+.titulo {
+  margin: 0;
+  color: #d32f2f;
+  font-size: 24px;
+}
+
+.subtitulo {
+  margin: 5px 0;
+  color: #666;
+  font-size: 18px;
+}
+
+.nit {
+  margin: 5px 0;
+  color: #888;
+  font-size: 14px;
+}
+
+.regimen {
+  margin: 5px 0;
+  color: #888;
+  font-size: 12px;
+}
+
+.infoGrid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 5px;
+}
+
+.infoLeft {
+  text-align: left;
+}
+
+.infoLeft p, .infoRight p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.infoRight {
+  text-align: right;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
+.th {
+  text-align: left;
+  padding: 12px;
+  background: #d32f2f;
+  color: white;
+  font-size: 14px;
+}
+
+.td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tdCenter {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.tdRight {
+  padding: 10px;
+  text-align: right;
+  border-bottom: 1px solid #ddd;
+}
+
+.productoInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.imagenFactura {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.nombreProducto {
+  font-size: 14px;
+}
+
+.totales {
+  width: 300px;
+  margin-left: auto;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 5px;
+}
+
+.lineaTotal {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 14px;
+}
+
+.lineaTotalFinal {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin-top: 5px;
+  border-top: 2px solid #d32f2f;
+  font-size: 18px;
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+  color: #666;
+}
+
+.footerSmall {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.acciones {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.btnPDF {
+  padding: 12px 30px;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btnPDF:hover {
+  background: #b71c1c;
+}
+
+.btnPDF:disabled {
+  background: #e57373;
+  cursor: not-allowed;
+}
+
+.btnVolver {
+  padding: 12px 30px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btnVolver:hover {
+  background: #1a252f;
+}
+
+.btn {
+  padding: 10px 20px;
+  background: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #1a252f;
+}
+
+.vacio {
+  text-align: center;
+  padding: 50px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cargando {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+  color: #666;
+}
+
+/* Estilos para impresión */
+@media print {
+  .acciones {
+    display: none;
+  }
+  
+  .factura {
+    box-shadow: none;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  .btnPDF, .btnVolver {
+    display: none;
+  }
+}

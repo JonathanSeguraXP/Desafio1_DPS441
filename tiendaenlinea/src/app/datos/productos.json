@@ -5,7 +5,8 @@
     "precio": 899.99,
     "categoria": "hardware",
     "imagen": "/imagenes/laptop-asus.jpg",
-    "descripcion": "RTX 3050, 16GB RAM, 512GB SSD"
+    "descripcion": "RTX 3050, 16GB RAM, 512GB SSD",
+    "stock": 5
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "precio": 35.50,
     "categoria": "hardware",
     "imagen": "/imagenes/mouse-logitech.jpg",
-    "descripcion": "RGB, 8000 DPI, 6 botones"
+    "descripcion": "RGB, 8000 DPI, 6 botones",
+    "stock": 15
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "precio": 45.99,
     "categoria": "hardware",
     "imagen": "/imagenes/teclado-redragon.jpg",
-    "descripcion": "Switch rojo, RGB, anti-ghosting"
+    "descripcion": "Switch rojo, RGB, anti-ghosting",
+    "stock": 8
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "precio": 159.99,
     "categoria": "hardware",
     "imagen": "/imagenes/monitor-samsung.jpg",
-    "descripcion": "Full HD, 75Hz, IPS"
+    "descripcion": "Full HD, 75Hz, IPS",
+    "stock": 3
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "precio": 79.99,
     "categoria": "hardware",
     "imagen": "/imagenes/audifonos-hyperx.jpg",
-    "descripcion": "7.1 surround, micrófono removible"
+    "descripcion": "7.1 surround, micrófono removible",
+    "stock": 10
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "precio": 89.99,
     "categoria": "hardware",
     "imagen": "/imagenes/ssd-samsung.jpg",
-    "descripcion": "NVMe M.2, 3500MB/s"
+    "descripcion": "NVMe M.2, 3500MB/s",
+    "stock": 7
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "precio": 65.99,
     "categoria": "hardware",
     "imagen": "/imagenes/ram-kingston.jpg",
-    "descripcion": "DDR4, 3200MHz"
+    "descripcion": "DDR4, 3200MHz",
+    "stock": 12
   },
   {
     "id": 8,
@@ -61,7 +68,8 @@
     "precio": 329.99,
     "categoria": "hardware",
     "imagen": "/imagenes/rtx3060.jpg",
-    "descripcion": "12GB GDDR6, DLSS"
+    "descripcion": "12GB GDDR6, DLSS",
+    "stock": 2
   },
   {
     "id": 9,
@@ -69,7 +77,8 @@
     "precio": 199.99,
     "categoria": "hardware",
     "imagen": "/imagenes/intel-i5.jpg",
-    "descripcion": "6 núcleos, 12 hilos"
+    "descripcion": "6 núcleos, 12 hilos",
+    "stock": 4
   },
   {
     "id": 10,
@@ -77,7 +86,8 @@
     "precio": 79.99,
     "categoria": "hardware",
     "imagen": "/imagenes/fuente-650w.jpg",
-    "descripcion": "80 Plus Bronze, modular"
+    "descripcion": "80 Plus Bronze, modular",
+    "stock": 6
   },
   {
     "id": 11,
@@ -85,7 +95,8 @@
     "precio": 89.99,
     "categoria": "hardware",
     "imagen": "/imagenes/gabinete-nzxt.jpg",
-    "descripcion": "Vidrio templado, blanco"
+    "descripcion": "Vidrio templado, blanco",
+    "stock": 4
   },
   {
     "id": 12,
@@ -93,7 +104,8 @@
     "precio": 249.99,
     "categoria": "hardware",
     "imagen": "/imagenes/silla-gamer.jpg",
-    "descripcion": "Reclinable, soporte lumbar"
+    "descripcion": "Reclinable, soporte lumbar",
+    "stock": 2
   },
   {
     "id": 13,
@@ -101,7 +113,8 @@
     "precio": 35.99,
     "categoria": "software",
     "imagen": "/imagenes/windows11.jpg",
-    "descripcion": "Licencia digital original"
+    "descripcion": "Licencia digital original",
+    "stock": 20
   },
   {
     "id": 14,
@@ -109,7 +122,8 @@
     "precio": 45.99,
     "categoria": "software",
     "imagen": "/imagenes/office2021.jpg",
-    "descripcion": "Word, Excel, PowerPoint"
+    "descripcion": "Word, Excel, PowerPoint",
+    "stock": 15
   },
   {
     "id": 15,
@@ -117,7 +131,8 @@
     "precio": 22.99,
     "categoria": "software",
     "imagen": "/imagenes/photoshop.jpg",
-    "descripcion": "Suscripción mensual"
+    "descripcion": "Suscripción mensual",
+    "stock": 25
   },
   {
     "id": 16,
@@ -125,7 +140,8 @@
     "precio": 29.99,
     "categoria": "software",
     "imagen": "/imagenes/mcafee.jpg",
-    "descripcion": "1 año, 3 dispositivos"
+    "descripcion": "1 año, 3 dispositivos",
+    "stock": 18
   },
   {
     "id": 17,
@@ -133,7 +149,8 @@
     "precio": 999.99,
     "categoria": "hardware",
     "imagen": "/imagenes/macbook-air.jpg",
-    "descripcion": "8GB RAM, 256GB SSD"
+    "descripcion": "8GB RAM, 256GB SSD",
+    "stock": 3
   },
   {
     "id": 18,
@@ -141,7 +158,8 @@
     "precio": 329.99,
     "categoria": "hardware",
     "imagen": "/imagenes/ipad.jpg",
-    "descripcion": "64GB, WiFi"
+    "descripcion": "64GB, WiFi",
+    "stock": 5
   },
   {
     "id": 19,
@@ -149,7 +167,8 @@
     "precio": 199.99,
     "categoria": "hardware",
     "imagen": "/imagenes/airpods-pro.jpg",
-    "descripcion": "Cancelación de ruido"
+    "descripcion": "Cancelación de ruido",
+    "stock": 7
   },
   {
     "id": 20,
@@ -157,7 +176,8 @@
     "precio": 249.99,
     "categoria": "hardware",
     "imagen": "/imagenes/apple-watch.jpg",
-    "descripcion": "GPS, 40mm"
+    "descripcion": "GPS, 40mm",
+    "stock": 4
   },
   {
     "id": 21,
@@ -165,6 +185,7 @@
     "precio": 299.99,
     "categoria": "software",
     "imagen": "/imagenes/finalcut.jpg",
-    "descripcion": "Licencia permanente"
+    "descripcion": "Licencia permanente",
+    "stock": 10
   }
 ]

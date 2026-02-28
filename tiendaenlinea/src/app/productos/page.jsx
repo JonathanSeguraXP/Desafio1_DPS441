@@ -3,10 +3,10 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCarrito } from "../context/CarritoContext";
 import TarjetaProducto from "../components/tarjetaproducto";
-import productos from "../datos/productos.json";
+import styles from "./Productos.module.css";
 
 export default function Productos() {
-  const { usuario } = useCarrito();
+  const { usuario, productos } = useCarrito();
   const router = useRouter();
 
   useEffect(() => {
@@ -16,13 +16,14 @@ export default function Productos() {
   }, [usuario, router]);
 
   if (!usuario) {
-    return <p style={styles.cargando}>Redirigiendo al login...</p>;
+    return <p className={styles.cargando}>Redirigiendo al login...</p>;
   }
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.titulo}>Nuestros Productos</h2>
-      <div style={styles.grid}>
+    <div className={styles.container}>
+      <h2 className={styles.titulo}>Nuestros Productos</h2>
+      {/* ✅ ELIMINADO: <p className={styles.stockInfo}>📦 Stock actualizado en tiempo real</p> */}
+      <div className={styles.grid}>
         {productos.map(producto => (
           <TarjetaProducto key={producto.id} producto={producto} />
         ))}
@@ -30,27 +31,3 @@ export default function Productos() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto"
-  },
-  titulo: {
-    textAlign: "center",
-    marginBottom: "30px",
-    color: "#333"
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-    gap: "20px",
-    padding: "20px"
-  },
-  cargando: {
-    textAlign: "center",
-    marginTop: "50px",
-    fontSize: "18px",
-    color: "#666"
-  }
-};
