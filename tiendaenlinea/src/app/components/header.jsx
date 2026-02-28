@@ -17,7 +17,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logo}>
         <Link href="/" className={styles.link}>
-          <h1>🛒 TechStore</h1>
+          <h1>🛒 TecnoStore</h1>
         </Link>
       </div>
       

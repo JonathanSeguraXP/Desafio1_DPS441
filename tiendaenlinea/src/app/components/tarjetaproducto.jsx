@@ -5,16 +5,12 @@ import { useCarrito } from "../context/CarritoContext";
 import styles from "./tarjetaProducto.module.css";
 
 export default function TarjetaProducto({ producto }) {
-  const { agregarAlCarrito, productos } = useCarrito();
+  const { agregarAlCarrito } = useCarrito();
   const [cantidadSeleccionada, setCantidadSeleccionada] = useState(1);
   const [mostrarSelector, setMostrarSelector] = useState(false);
 
-  // Obtener el stock ACTUALIZADO en tiempo real
-  const productoActualizado = productos.find(p => p.id === producto.id) || producto;
-  const stockActual = productoActualizado.stock;
-
   const handleAgregar = () => {
-    if (stockActual === 0) {
+    if (producto.stock === 0) {
       alert(`❌ ${producto.nombre} está agotado`);
       return;
     }
@@ -28,28 +24,25 @@ export default function TarjetaProducto({ producto }) {
     }
   };
 
-  // Determinar clase de stock
   const getStockClass = () => {
-    if (stockActual === 0) return styles.stockAgotado;
-    if (stockActual <= 3) return styles.stockCritico;
-    if (stockActual <= 10) return styles.stockBajo;
+    if (producto.stock === 0) return styles.stockAgotado;
+    if (producto.stock <= 3) return styles.stockCritico;
+    if (producto.stock <= 10) return styles.stockBajo;
     return styles.stockNormal;
   };
 
-  // Texto de stock
   const getStockText = () => {
-    if (stockActual === 0) return "🚫 Agotado";
-    if (stockActual <= 3) return `⚠️ ¡Últimas ${stockActual} unidades!`;
-    if (stockActual <= 10) return `📦 Stock: ${stockActual}`;
-    return `✅ Stock: ${stockActual}`;
+    if (producto.stock === 0) return "🚫 Agotado";
+    if (producto.stock <= 3) return `⚠️ ¡Últimas ${producto.stock} unidades!`;
+    if (producto.stock <= 10) return `📦 Stock: ${producto.stock}`;
+    return `✅ Stock: ${producto.stock}`;
   };
 
   return (
-    <div className={`${styles.card} ${stockActual === 0 ? styles.cardAgotado : ''}`}>
-      {/* Etiqueta de oferta si hay poco stock */}
-      {stockActual > 0 && stockActual <= 3 && (
+    <div className={`${styles.card} ${producto.stock === 0 ? styles.cardAgotado : ''}`}>
+      {producto.stock > 0 && producto.stock <= 3 && (
         <div className={styles.etiquetaOferta}>
-          ¡Últimas {stockActual}!
+          ¡Últimas {producto.stock}!
         </div>
       )}
       
@@ -60,9 +53,7 @@ export default function TarjetaProducto({ producto }) {
           width={200}
           height={200}
           className={styles.image}
-          onError={(e) => {
-            e.target.src = "https://via.placeholder.com/200";
-          }}
+          unoptimized={true}
         />
       </div>
       
@@ -70,7 +61,6 @@ export default function TarjetaProducto({ producto }) {
         <h3 className={styles.nombre}>{producto.nombre}</h3>
         <p className={styles.descripcion}>{producto.descripcion}</p>
         
-        {/* Indicador de stock en tiempo real */}
         <div className={styles.stockContainer}>
           <span className={`${styles.stockBadge} ${getStockClass()}`}>
             {getStockText()}
@@ -79,7 +69,7 @@ export default function TarjetaProducto({ producto }) {
         
         <p className={styles.precio}>${producto.precio.toFixed(2)}</p>
         
-        {stockActual > 0 ? (
+        {producto.stock > 0 ? (
           <>
             {!mostrarSelector ? (
               <button 
@@ -101,9 +91,9 @@ export default function TarjetaProducto({ producto }) {
                   </button>
                   <span className={styles.selectorValor}>{cantidadSeleccionada}</span>
                   <button 
-                    onClick={() => setCantidadSeleccionada(Math.min(stockActual, cantidadSeleccionada + 1))}
+                    onClick={() => setCantidadSeleccionada(Math.min(producto.stock, cantidadSeleccionada + 1))}
                     className={styles.selectorBtn}
-                    disabled={cantidadSeleccionada >= stockActual}
+                    disabled={cantidadSeleccionada >= producto.stock}
                   >
                     +
                   </button>
@@ -126,7 +116,7 @@ export default function TarjetaProducto({ producto }) {
                   </button>
                 </div>
                 <p className={styles.selectorStock}>
-                  Disponible: {stockActual} unidades
+                  Disponible: {producto.stock} unidades
                 </p>
               </div>
             )}

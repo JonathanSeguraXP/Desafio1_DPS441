@@ -30,14 +30,12 @@ export default function Login() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
-        <div className={styles.header}>
-          <div className={styles.icono}>🛒</div>
-          <h1 className={styles.title}>
-            Tech<span>Store</span>
-          </h1>
-        </div>
+        <div className={styles.icono}>🛒</div>
+        <h2 className={styles.title}>
+          Tech<span>Store</span>
+        </h2>
         
-        {error && <div className={styles.error}>{error}</div>}
+        {error && <p className={styles.error}>{error}</p>}
         
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.inputGroup}>
@@ -68,12 +66,6 @@ export default function Login() {
             INICIAR SESIÓN
           </button>
         </form>
-        
-        <div className={styles.demo}>
-          <div className={styles.demoTitle}>📝 Demo:</div>
-          <p><strong>admin</strong> / 123456</p>
-          <p><strong>estudiante</strong> / dps441</p>
-        </div>
       </div>
     </div>
   );
