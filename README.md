@@ -4,7 +4,7 @@ Aplicación web de tienda en línea desarrollada con **Next.js** y **React** par
 
 
 ## 📹 Video Demostrativo
-
+https://drive.google.com/file/d/1h0MLPWzfuPj7HHTTIeU8olFSH3S-QBzm/view?usp=sharing
 
 ## 📋 Requisitos del Proyecto
 - ✅ Login con usuario/contraseña (JSON simulado)
