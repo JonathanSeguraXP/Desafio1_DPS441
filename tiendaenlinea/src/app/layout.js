@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { CarritoProvider } from "./context/CarritoContext";
-import Header from "./components/Header";
+import Header from "./components/header";
 import "./globals.css";
 
 export default function RootLayout({ children }) {
